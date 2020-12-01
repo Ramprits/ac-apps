@@ -14,6 +14,8 @@ import Avatar from "@material-ui/core/Avatar";
 import { blue } from "@material-ui/core/colors";
 
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+import { auth } from "../../firebase/firebase.config";
+import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
   section: {
@@ -42,10 +44,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RegisterForm(props) {
   const classes = useStyles();
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => {
+    auth.createUserWithEmailAndPassword(data.email, data.password);
+    props.history.push("/");
+  };
 
   const content = {
-    header: "Welcome to back!",
-    "primary-action": "Sign in",
+    header: "Welcome to Local Technician",
+    "primary-action": "Sign up",
     "secondary-action": "Already have an account? Login",
     ...props.content,
   };
@@ -74,7 +81,7 @@ export default function RegisterForm(props) {
                 </Typography>
 
                 <Box my={3}>
-                  <form noValidate>
+                  <form noValidate onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <TextField
@@ -83,6 +90,7 @@ export default function RegisterForm(props) {
                           fullWidth
                           size="small"
                           name="displayName"
+                          inputRef={register({ required: true })}
                           label="User Name"
                         />
                       </Grid>
@@ -93,6 +101,7 @@ export default function RegisterForm(props) {
                           fullWidth
                           size="small"
                           name="email"
+                          inputRef={register({ required: true })}
                           label="E-mail address"
                         />
                       </Grid>
@@ -103,6 +112,7 @@ export default function RegisterForm(props) {
                           fullWidth
                           size="small"
                           type="password"
+                          inputRef={register({ required: true })}
                           name="password"
                           label="Password"
                         />

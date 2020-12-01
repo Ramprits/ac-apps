@@ -27,21 +27,20 @@ export default function HowItWorks(props) {
   const classes = useStyles();
 
   const content = {
-    badge: "LOREM IPSUM",
-    "header-p1": "Donec lacinia",
-    "header-p2": "turpis non sapien lobortis pretium",
-    description:
-      "Integer feugiat massa sapien, vitae tristique metus suscipit nec.",
+    "header-p1": "Your Local HVAC, Electrical & Home Services Company",
+    description: "Quality Solutions for Heating and Cooling",
     "col1-image": "nereus-assets/img/illustrations/speak.svg",
     "col1-header": "Donec fermentum",
-    "col1-desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "col1-desc":
+      "If you do not want to be uncomfortable in your own home then you must act now by contacting us to make any needed repairs.",
     "col2-image": "nereus-assets/img/illustrations/loading.svg",
     "col2-header": "Dolor sit amet consectutar",
-    "col2-desc": "Donec id lorem eget purus maximus suscipit nec vitae quam.",
+    "col2-desc":
+      "There are a variety of reasons why your furnace may require repairs. One of the biggest problems is that the furnace is working too hard to keep up with the demand.",
     "col3-image": "nereus-assets/img/illustrations/financial-report.svg",
     "col3-header": "Aliquam pellentesque",
     "col3-desc":
-      "Vivamus fringilla finibus tincidunt. Integer mollis pellentesque libero.",
+      "We complete inspection of your furnace to determine what is giving you cause for concern. Chances are that there is no need for you to replace your furnace, as it may simply need some repairs. ",
     ...props.content,
   };
 
@@ -51,20 +50,11 @@ export default function HowItWorks(props) {
         <Box py={10} textAlign="center">
           <Box mb={8}>
             <Container maxWidth="sm">
-              <Typography
-                variant="overline"
-                color="textSecondary"
-                paragraph={true}
-              >
-                {content["badge"]}
+              <Typography variant="h3" component="span" color="primary">
+                {content["header-p1"]}{" "}
               </Typography>
-              <Typography variant="h3" component="h2" gutterBottom={true}>
-                <Typography variant="h3" component="span" color="primary">
-                  {content["header-p1"]}{" "}
-                </Typography>
-                <Typography variant="h3" component="span">
-                  {content["header-p2"]}
-                </Typography>
+              <Typography variant="h3" component="span">
+                {content["header-p2"]}
               </Typography>
               <Typography
                 variant="subtitle1"

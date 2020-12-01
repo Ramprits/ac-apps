@@ -14,6 +14,8 @@ import Avatar from "@material-ui/core/Avatar";
 import { blue } from "@material-ui/core/colors";
 
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+import { useForm } from "react-hook-form";
+import { auth } from "../../firebase/firebase.config";
 
 const useStyles = makeStyles((theme) => ({
   section: {
@@ -42,7 +44,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginForm(props) {
   const classes = useStyles();
-
+  const { register, handleSubmit } = useForm({
+    reValidateMode: "onChange",
+  });
   const content = {
     header: "Welcome to back!",
     "primary-action": "Sign in",
@@ -50,6 +54,9 @@ export default function LoginForm(props) {
     ...props.content,
   };
 
+  const onSubmit = (data) => {
+    auth.signInWithEmailAndPassword(data.email, data.password);
+  };
   return (
     <section className={classes.section}>
       <Container maxWidth="xs">
@@ -74,7 +81,7 @@ export default function LoginForm(props) {
                 </Typography>
 
                 <Box my={3}>
-                  <form noValidate>
+                  <form noValidate onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <TextField
@@ -83,6 +90,7 @@ export default function LoginForm(props) {
                           fullWidth
                           size="small"
                           name="email"
+                          inputRef={register({ required: true })}
                           label="E-mail address"
                         />
                       </Grid>
@@ -94,6 +102,7 @@ export default function LoginForm(props) {
                           size="small"
                           type="password"
                           name="password"
+                          inputRef={register({ required: true })}
                           label="Password"
                         />
                       </Grid>
@@ -103,9 +112,6 @@ export default function LoginForm(props) {
                           justifyContent="space-between"
                           className={classes.actions}
                         >
-                          <Link href="#" color="textSecondary">
-                            {content["secondary-action"]}
-                          </Link>
                           <Button
                             type="submit"
                             variant="contained"
@@ -115,6 +121,9 @@ export default function LoginForm(props) {
                           >
                             {content["primary-action"]}
                           </Button>
+                          <Link href="#" color="textSecondary">
+                            {content["secondary-action"]}
+                          </Link>
                         </Box>
                       </Grid>
                     </Grid>

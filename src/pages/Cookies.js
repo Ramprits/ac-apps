@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import Blog6 from '../components/blog/Blog6';
+import Blog6 from "../components/blog/Blog";
 
 export default function Cookies() {
   return (
@@ -9,4 +9,3 @@ export default function Cookies() {
     </React.Fragment>
   );
 }
-

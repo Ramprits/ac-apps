@@ -1,14 +1,14 @@
 import React from "react";
 
-import SignIn1 from "../components/sign-in/SignIn";
-import Footer3 from "../components/footers/Footer3";
+import SignIn from "../components/sign-in/SignIn";
+import Footer from "../components/footers/Footer";
 
 export default function Login() {
   return (
     <React.Fragment>
-      <SignIn1 content={null} />
+      <SignIn content={null} />
 
-      <Footer3 content={null} />
+      <Footer content={null} />
     </React.Fragment>
   );
 }

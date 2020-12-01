@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import Team1 from '../components/team/Team1';
+import Team1 from "../components/team/Team";
 
 export default function Services() {
   return (
@@ -9,4 +9,3 @@ export default function Services() {
     </React.Fragment>
   );
 }
-

@@ -1,7 +1,7 @@
 import React from "react";
 
 import SignUp from "../components/sign-up/SignUp";
-import Footer3 from "../components/footers/Footer3";
+import Footer3 from "../components/footers/Footer";
 
 export default function Register() {
   return (

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import HttpCode1 from '../components/http-codes/HttpCode1';
+import HttpCode1 from "../components/http-codes/HttpCode";
 
 export default function Notfound() {
   return (
@@ -9,4 +9,3 @@ export default function Notfound() {
     </React.Fragment>
   );
 }
-
