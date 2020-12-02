@@ -5,12 +5,16 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+
 import IndexPage from "./pages/Index.js";
 import ServicesPage from "./pages/Services.js";
 import LoginPage from "./pages/Login.js";
 import RegisterPage from "./pages/Register.js";
 import NotfoundPage from "./pages/Notfound.js";
 import CookiesPage from "./pages/Cookies.js";
+import ContactPage from "./pages/Contact.js";
+import BlogPage from "./pages/Blog";
+
 import { auth } from "./firebase/firebase.config.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./actions/user.js";
@@ -38,6 +42,12 @@ const App = () => {
         </Route>
         <Route exact path="/services">
           <ServicesPage />
+        </Route>
+        <Route exact path="/blog">
+          <BlogPage />
+        </Route>
+        <Route exact path="/contact">
+          <ContactPage />
         </Route>
         <Route
           exact

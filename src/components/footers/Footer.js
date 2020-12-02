@@ -30,12 +30,12 @@ export default function Footer(props) {
   const classes = useStyles();
 
   const content = {
-    brand: { image: "nereus-assets/img/nereus-light.png", width: 110 },
-    copy: "© 2020 Nereus. All rights reserved.",
-    link1: "First Link",
-    link2: "Second Link",
-    link3: "Third Link",
-    link4: "Fourth Link",
+    brand: { image: "images/logo.png", width: 110 },
+    copy: "© 2020 SS Aircon. All rights reserved.",
+    link1: "Home",
+    link2: "Service",
+    link3: "Blog",
+    link4: "Contact",
     ...props.content,
   };
 

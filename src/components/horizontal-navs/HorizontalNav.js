@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as RouterLink } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
@@ -58,16 +59,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navigation(props) {
+export default function HorizontalNav(props) {
+  const { currentUser } = useSelector((state) => state.user);
+
   const { to } = props;
   const classes = useStyles();
 
   const content = {
     brand: { image: "nereus-assets/img/nereus-light.png", width: 110 },
-    link1: "Section One",
-    link2: "Section Two",
-    link3: "Section Three",
-    link4: "Section Four",
+    link1: "Home",
+    link2: "Service",
+    link3: "Blog",
+    link4: "Contact",
+    "primary-logout": "Logout",
     "primary-action": "Login",
     ...props.content,
   };
@@ -117,8 +121,6 @@ export default function Navigation(props) {
           {brand}
         </Link>
         <Link
-          component={CustomLink}
-          to="#/dashboard"
           color="textPrimary"
           variant="body2"
           component={CustomLink}
@@ -128,12 +130,10 @@ export default function Navigation(props) {
           {content["link1"]}
         </Link>
         <Link
-          component={CustomLink}
-          to="#/services"
           color="textPrimary"
           variant="body2"
           component={CustomLink}
-          to="/service"
+          to="/services"
           className={classes.link}
         >
           {content["link2"]}
@@ -158,15 +158,28 @@ export default function Navigation(props) {
         >
           {content["link4"]}
         </Link>
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.primaryAction}
-          component={CustomLink}
-          to="/login"
-        >
-          {content["primary-action"]}
-        </Button>
+        {currentUser ? (
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.primaryAction}
+            component={CustomLink}
+            to="/login"
+          >
+            {content["primary-logout"]}
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.primaryAction}
+            component={CustomLink}
+            to="/login"
+          >
+            {content["primary-action"]}
+          </Button>
+        )}
+
         <IconButton
           edge="start"
           color="inherit"
@@ -190,7 +203,8 @@ export default function Navigation(props) {
             borderColor="background.emphasis"
           >
             <Link
-              href="#"
+              to="/"
+              component={CustomLink}
               color="primary"
               underline="none"
               variant="h5"
@@ -204,26 +218,41 @@ export default function Navigation(props) {
               button
               key={content["link1"]}
               component={CustomLink}
-              to="#/home"
+              to="/home"
             >
               <ListItemIcon className={classes.iconWrapper}>
                 <LayersIcon className={classes.icon} />
               </ListItemIcon>
               <ListItemText primary={content["link1"]} />
             </ListItem>
-            <ListItem button key={content["link2"]}>
+            <ListItem
+              button
+              key={content["link2"]}
+              component={CustomLink}
+              to="/services"
+            >
               <ListItemIcon className={classes.iconWrapper}>
                 <FilterHdrIcon className={classes.icon} />
               </ListItemIcon>
               <ListItemText primary={content["link2"]} />
             </ListItem>
-            <ListItem button key={content["link3"]}>
+            <ListItem
+              button
+              key={content["link3"]}
+              component={CustomLink}
+              to="/blog"
+            >
               <ListItemIcon className={classes.iconWrapper}>
                 <DirectionsBusIcon className={classes.icon} />
               </ListItemIcon>
               <ListItemText primary={content["link3"]} />
             </ListItem>
-            <ListItem button key={content["link4"]}>
+            <ListItem
+              button
+              key={content["link4"]}
+              component={CustomLink}
+              to="/contact"
+            >
               <ListItemIcon className={classes.iconWrapper}>
                 <NotificationImportantIcon className={classes.icon} />
               </ListItemIcon>
