@@ -10,12 +10,15 @@ import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
 
 import { blue } from "@material-ui/core/colors";
 
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import { useForm } from "react-hook-form";
 import { auth } from "../../firebase/firebase.config";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrorMessage, loginError } from "../../actions/user";
 
 const useStyles = makeStyles((theme) => ({
   section: {
@@ -44,7 +47,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginForm(props) {
   const classes = useStyles();
-  const { register, handleSubmit } = useForm({
+  const dispatch = useDispatch();
+  const { currentUser, error, loading } = useSelector((state) => state.user);
+  const { register, handleSubmit, errors } = useForm({
     reValidateMode: "onChange",
   });
   const content = {
@@ -53,9 +58,26 @@ export default function LoginForm(props) {
     "secondary-action": "Forgot your password?",
     ...props.content,
   };
+  const action = (
+    <Button
+      color="secondary"
+      size="small"
+      onClick={() => dispatch(clearErrorMessage())}
+    >
+      Close
+    </Button>
+  );
 
-  const onSubmit = (data) => {
-    auth.signInWithEmailAndPassword(data.email, data.password);
+  const onSubmit = async (data) => {
+    try {
+      const response = await auth.signInWithEmailAndPassword(
+        data.email,
+        data.password
+      );
+      console.log("response", response);
+    } catch (error) {
+      dispatch(loginError(error.message));
+    }
   };
   return (
     <section className={classes.section}>
@@ -86,7 +108,7 @@ export default function LoginForm(props) {
                       <Grid item xs={12}>
                         <TextField
                           variant="outlined"
-                          required
+                          error={!!errors.email}
                           fullWidth
                           size="small"
                           name="email"
@@ -97,7 +119,7 @@ export default function LoginForm(props) {
                       <Grid item xs={12}>
                         <TextField
                           variant="outlined"
-                          required
+                          error={!!errors.password}
                           fullWidth
                           size="small"
                           type="password"
@@ -106,6 +128,11 @@ export default function LoginForm(props) {
                           label="Password"
                         />
                       </Grid>
+                      {error && (
+                        <Grid item xs={12}>
+                          <SnackbarContent message={error} action={action} />
+                        </Grid>
+                      )}
                       <Grid item xs={12}>
                         <Box
                           alignItems="center"
@@ -114,6 +141,7 @@ export default function LoginForm(props) {
                         >
                           <Button
                             type="submit"
+                            disabled={loading}
                             variant="contained"
                             color="primary"
                             size="large"

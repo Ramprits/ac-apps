@@ -20,7 +20,8 @@ import LayersIcon from "@material-ui/icons/Layers";
 import FilterHdrIcon from "@material-ui/icons/FilterHdr";
 import DirectionsBusIcon from "@material-ui/icons/DirectionsBus";
 import NotificationImportantIcon from "@material-ui/icons/NotificationImportant";
-
+import { auth } from "../../firebase/firebase.config";
+import { logout } from "../../actions/user";
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     minHeight: 70,
@@ -61,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HorizontalNav(props) {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const { to } = props;
   const classes = useStyles();
@@ -163,8 +165,10 @@ export default function HorizontalNav(props) {
             variant="contained"
             color="secondary"
             className={classes.primaryAction}
-            component={CustomLink}
-            to="/login"
+            onClick={() => {
+              auth.signOut();
+              dispatch(logout());
+            }}
           >
             {content["primary-logout"]}
           </Button>
@@ -218,7 +222,7 @@ export default function HorizontalNav(props) {
               button
               key={content["link1"]}
               component={CustomLink}
-              to="/home"
+              to="/"
             >
               <ListItemIcon className={classes.iconWrapper}>
                 <LayersIcon className={classes.icon} />
@@ -269,9 +273,29 @@ export default function HorizontalNav(props) {
             borderRight={0}
             borderColor="background.emphasis"
           >
-            <Button variant="contained" color="secondary" fullWidth>
-              {content["primary-action"]}
-            </Button>
+            {currentUser ? (
+              <Button
+                variant="contained"
+                color="secondary"
+                fullWidth
+                onClick={() => {
+                  auth.signOut();
+                  dispatch(logout());
+                }}
+              >
+                {content["primary-logout"]}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="secondary"
+                fullWidth
+                component={CustomLink}
+                to="/login"
+              >
+                {content["primary-action"]}
+              </Button>
+            )}
           </Box>
         </div>
       </Drawer>
